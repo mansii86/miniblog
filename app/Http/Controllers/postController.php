@@ -9,6 +9,7 @@ use App\Http\Controllers;
 use App\Posts;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostFormRequest;
+use Illuminate\Support\Facades\File;
 
 
 class postController extends Controller
@@ -34,6 +35,13 @@ class postController extends Controller
         $post=new Post();
         $post->title=$request->title;
         $post->body=$request->body;
+        if($request->hasFile('image'))
+        {
+            $file=$request->file('image');
+            $filename=time().'.'.$file->getClientOriginalExtension();
+            $file->move('uploads/post/',$filename);
+            $post->image=$filename;
+        }
         $user->post()->save($post);
         return redirect(route('post_index'))->with('status','Post Added');
     }
@@ -84,6 +92,19 @@ class postController extends Controller
        $post=post::find($id);
        $post->title=$request->title;
         $post->body=$request->body;
+        if($request->hasFile('image'))
+        {
+            $destination='uploads/post/'.$post->image;
+            if(File::exists($destination))
+            {
+                File::delete($destination);
+            }
+
+            $file=$request->file('image');
+            $filename=time().'.'.$file->getClientOriginalExtension();
+            $file->move('uploads/post/',$filename);
+            $post->image=$filename;
+        }
         $post->save();
         return redirect(route('dashboard'))->with('status','Post Updated');
     }
@@ -94,9 +115,25 @@ class postController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
+        $post=post::find($id);
+        if($request->hasFile('image'))
+        {
+            $destination='uploads/post/'.$post->image;
+            if(File::exists($destination))
+            {
+                File::delete($destination);
+            }
+
+            $file=$request->file('image');
+            $filename=time().'.'.$file->getClientOriginalExtension();
+            $file->move('uploads/post/',$filename);
+            $post->image=$filename;
+        }
+
         Post::destroy($id);
+
         return redirect(route('dashboard'))->with('status','Post Deleted');
     }
 }

@@ -9,21 +9,30 @@
 
         <title>Form</title>
       </div>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
     @csrf
         <div class="form-group">
           <label for="title">Title</label>
           <input type="text" class="form-control" id="title"  name="title" placeholder="Enter Title">
-          {{-- <small id="" class="form-text text-muted">We'll never share your name with anyone else.</small> --}}
+          <br><br>
+
         </div>
         <div class="form-group">
           <label for="body">Body</label>
           <input type="text" class="form-control" name="body" name="body" placeholder="Enter Body">
+          <br><br>
         </div>
 
+        <div class="form-group">
+            <label for="image">Image</label>
+            <input type="file" class="form-control" id="image"  name="image">
+            <br><br>
+        </div>
 
         <div class="form-group">
-        <button type="submit" class="btn btn-primary">Submit</button>
+            <input type="button" class="btn btn-primary">Submit
+        <br><br>
+
         </div>
       </form>
       @if (session()->has('status'))

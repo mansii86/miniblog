@@ -271,6 +271,7 @@ table.table .avatar {
 						<th>Name</th>
 						<th>Title</th>
 						<th>Body</th>
+                        <th>Image</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
@@ -287,21 +288,21 @@ table.table .avatar {
 						<td>{{$post->user->name}}</td>
 						<td>{{$post->title}}</td>
 						<td> {{$post->body}}</td>
+                        <td>
+                                <img height="100px" width="100px" src="{{asset('uploads/post/'.$post->image)}}" alt="image">
+                        </td>
 						<td>
 							<a href="{{url('/post/edit',$post->id)}}" class="edit" ><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 							<a href="{{url('/post/delete',$post->id)}}" class="delete"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 						</td>
 					</tr>
-
-
-
                 <br>
                 @endforeach
 
 				</tbody>
 			</table>
 			<div class="clearfix">
-				<div class="hint-text">Showing <b>3</b> out of <b>25</b> entries</div>
+				<div class="hint-text">Showing <b>3</b> out of <b>15 </b> entries</div>
 				<ul class="pagination">
 					<li class="page-item disabled"><a href="#">Previous</a></li>
 					<li class="page-item"><a href="#" class="page-link">1</a></li>
@@ -378,43 +379,8 @@ table.table .avatar {
 		</div>
 	</div>
 </div>
-<!-- Delete Modal HTML -->
-<div id="deleteEmployeeModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<form>
-				<div class="modal-header">
-					<h4 class="modal-title">Delete Post</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">
-					<p>Are you sure you want to delete these Records?</p>
-					<p class="text-warning"><small>This action cannot be undone.</small></p>
-				</div>
-				<div class="modal-footer">
-					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-danger" value="Delete">
-				</div>
-			</form>
-		</div>
-	</div>
+
 </div>
 </body>
 </html>
-
-    {{-- <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    All Post Data
-                    @foreach ( $posts as $post)
-
-                        {{$post->title}}
-                        {{$post->body}}
-                    <br>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </div> --}}
 </x-app-layout>
